@@ -232,4 +232,64 @@ namespace Algorithm
         }
     }
 
+    public  class PartitionString
+    {
+        public IList<IList<string>> Partition(string s)
+        {
+            List<IList<string>> results = new List<IList<string>>();
+            if(string.IsNullOrEmpty(s))
+            {
+                return results;
+            }
+            PalindromeHelper(results, new List<string>(), 0, s);
+            return results;
+
+        }
+        //可以理解为划分型 组合问题 如果有n个字符串 则有2^(n-1)次方的可能
+        void PalindromeHelper(List<IList<string>> results,List<string> subList,int startIndx,string src)
+        {
+            //递归出口 划分的位置等于字符长度时 依然是递归的外层循环
+            if(startIndx == src.Length)
+            {
+                results.Add(new List<string>(subList));
+                return;
+            }
+
+      
+            for(int i = startIndx;i<src.Length;i++)
+            {
+                string str = src.Substring(startIndx, i-startIndx+1);
+                if(IsPalindrome(str.ToCharArray()))
+                {
+                    subList.Add(str);
+                    PalindromeHelper(results, subList, i + 1, src);
+                    subList.RemoveAt(subList.Count - 1);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        bool IsPalindrome(char[] str)
+        {
+            if(str.Length == 0)
+            {
+                return true;
+            }
+            char[] ss = str;
+            int len = ss.Length;
+            int start = 0, end = len - 1;
+            while(start<=end)
+            {
+                if(ss[start] != ss[end])
+                {
+                    return false;
+                }
+                start++;
+                end--;
+            }
+            return true;
+        }
+    }
 }
