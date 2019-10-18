@@ -186,4 +186,50 @@ namespace Algorithm
 
         }
     }
+
+    public class SubSets
+    {
+        /*
+         给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+         说明：解集不能包含重复的子集。
+         */
+         public static void TestSubSets()
+        {
+            int[] testData = new int[] { 1, 2, 2 };
+            SubsetsWithDup(testData);
+        }
+        static IList<IList<int>> SubsetsWithDup(int[] nums)
+        {
+            List<IList<int>> results = new List<IList<int>>();
+            Array.Sort(nums);
+            SubSetHelper(results, new List<int>(), 0, nums);
+            return results;
+        }
+        static void SubSetHelper(List<IList<int>> results,List<int> subResult,int startIndex,int[] nums)
+        {
+            results.Add(new List<int>(subResult));
+
+            for(int i = startIndex;i<nums.Length;i++)
+            {
+                //去重  先排序
+                /*
+                 假设 数据为 [1,2,2]  重复子集为[1,2] (2)[1,2']  我们选择第一个为结果，那么当碰到
+                 （2）的结果的时候 我们要判断是否已经加入子集 判断当前值是否和上一位相等 
+                 即nums[i] == nums[i-1]并且第i-1个数没被加入集合 通过i和startindex比较
+                 递归循环的理解 
+                 循环就是把 以某几个元素开始的 开头的子集全部加入 一个循环内的子集的个数是相同的 
+                 每递归一层 子集内元素的个数会增加一个
+                 */
+                 if(i>0 && nums[i] == nums[i-1]&&i>startIndex)
+                {
+                    continue;
+                }
+                subResult.Add(nums[i]);
+                SubSetHelper(results, subResult, i + 1, nums);
+                //回溯
+                subResult.RemoveAt(subResult.Count - 1);
+            }
+        }
+    }
+
 }

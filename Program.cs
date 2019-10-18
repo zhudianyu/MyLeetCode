@@ -16,7 +16,8 @@ namespace Algorithm
             // LinkList.TestRKList();
             //             SolveNQueen s = new SolveNQueen();
             //             s.SolveNQueens(4);
-            DFS.TestRmoveDuplicates();
+            // DFS.TestRmoveDuplicates();
+            SubSets.TestSubSets();
         }
         static void TestDecodeAlpaha()
         {
