@@ -234,6 +234,10 @@ namespace Algorithm
 
     public  class PartitionString
     {
+        public void Test()
+        {
+            var res = Partition("aab");
+        }
         public IList<IList<string>> Partition(string s)
         {
             List<IList<string>> results = new List<IList<string>>();
@@ -292,4 +296,47 @@ namespace Algorithm
             return true;
         }
     }
+    /// <summary>
+    /// 全排列
+    /// </summary>
+    public class AllPermute
+    {
+        public IList<IList<int>> Permute(int[] nums)
+        {
+            List<IList<int>> results = new List<IList<int>>();
+            if(nums == null ||nums.Length == 0)
+            {
+                return results;
+            }
+            Array.Sort(nums);
+            bool[] visit = new bool[nums.Length];
+            PermuteHelper(results, new List<int>(), nums, visit);
+            return results;
+        }
+        void PermuteHelper(List<IList<int>> results, List<int> sub, int[] nums, bool[] visit)
+        {
+            if (sub.Count == nums.Length)
+            {
+                results.Add(new List<int>(sub));
+                return;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (visit[i])
+                {
+                    continue;
+                }
+                if (i != 0 && nums[i] == nums[i - 1] && !visit[i - 1])
+                {
+                    continue;
+                }
+                sub.Add(nums[i]);
+                visit[i] = true;
+                PermuteHelper(results, sub, nums, visit);
+                sub.RemoveAt(sub.Count - 1);
+                visit[i] = false;
+            }
+        }
+    }
+
 }

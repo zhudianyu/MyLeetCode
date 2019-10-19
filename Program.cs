@@ -17,7 +17,9 @@ namespace Algorithm
             //             SolveNQueen s = new SolveNQueen();
             //             s.SolveNQueens(4);
             // DFS.TestRmoveDuplicates();
-            SubSets.TestSubSets();
+            // SubSets.TestSubSets();
+            PartitionString ps = new PartitionString();
+            ps.Test();
         }
         static void TestDecodeAlpaha()
         {
