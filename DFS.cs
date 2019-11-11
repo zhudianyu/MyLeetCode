@@ -326,6 +326,7 @@ namespace Algorithm
                 {
                     continue;
                 }
+                //去重判断是重点
                 if (i != 0 && nums[i] == nums[i - 1] && !visit[i - 1])
                 {
                     continue;
@@ -333,6 +334,7 @@ namespace Algorithm
                 sub.Add(nums[i]);
                 visit[i] = true;
                 PermuteHelper(results, sub, nums, visit);
+                //回溯 要还原状态
                 sub.RemoveAt(sub.Count - 1);
                 visit[i] = false;
             }

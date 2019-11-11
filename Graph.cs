@@ -411,5 +411,111 @@ namespace Algorithm
             }
             return -1;
         }
+
+
+    }
+
+    public class WroldLadder
+    {
+        public void Test()
+        {
+            string[] data = new string[] { "hot","dot","dog","lot","log"};
+            var r = LadderLength("hit", "cog", data);
+            foreach(var s in r)
+            {
+                foreach(var ss in s)
+                {
+                    Console.Write(ss+",");
+                }
+                Console.WriteLine();
+            }
+        }
+        public int LadderLength(string beginWord, string endWord, IList<string> wordList)
+        {
+           
+            List<string> result = new List<string>();
+            if(wordList == null ||wordList.Count == 0)
+            {
+                return 0;
+            }
+            if(string.IsNullOrEmpty(beginWord) || string.IsNullOrEmpty(endWord))
+            {
+                return 0;
+            }
+
+            HashSet<string> worldDic = new HashSet<string>();
+            foreach(var s in wordList)
+            {
+                worldDic.Add(s);
+            }
+            HashSet<string> hash = new HashSet<string>();
+         
+            worldDic.Add(endWord);
+            Queue<string> q = new Queue<string>();
+            q.Enqueue(beginWord);
+            hash.Add(beginWord);
+            int len = 1;
+            while (q.Count != 0)
+            {
+                len++;
+              
+                int count = q.Count;
+                for(int i = 0;i<count;i++)
+                {
+                    string w = q.Dequeue();
+                    List<string> nextList = GetNextWorld(worldDic, w);
+                 
+                    foreach (var next in nextList)
+                    {
+                        if(hash.Contains(next))
+                        {
+                            continue;
+                        }
+                        if (next.Equals(endWord))
+                        {
+                            return len;
+                        }
+                        else
+                        {
+                            hash.Add(next);
+                      
+                            q.Enqueue(next);
+                        }
+                    }
+                }
+              
+            }
+            return 0;
+        }
+        string ReplaceStr(string s,int index,char c)
+        {
+            char[] cc = s.ToCharArray();
+            cc[index] = c;
+            return new string(cc);
+        }
+        List<string> GetNextWorld(HashSet<string> worldList,string world)
+        {
+            List<string> nextStr = new List<string>();
+            for(char c = 'a';c < 'z';c++)
+            {
+                for(int i = 0;i<world.Length;i++)
+                {
+                    char s = world[i];
+                    if(c == s)
+                    {//不要加入相同的字符串
+                        continue;
+                    }
+                    //替换的后一定是一个新的对象 保持worl不变  不能用string.replace 这个会替换多个查到的字符 
+                    //只能按照索引替换
+                    string temp = ReplaceStr(world,i, c);
+                    if(worldList.Contains(temp))
+                    {
+                        nextStr.Add(temp);
+                    }
+                }
+              
+            }
+            return nextStr;
+        }
     }
 }
